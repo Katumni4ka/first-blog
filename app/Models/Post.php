@@ -13,6 +13,10 @@ class Post extends Model
     use HasFactory;
     use Sluggable;
 
+    const IS_DRAFT = 0;
+    const IS_PUBLIC = 1;
+    const IS_FEATURED = 1;
+    const IS_STANDART = 0;
     protected $fillable = ['title', 'content'];
 
     public function category()
@@ -74,4 +78,70 @@ class Post extends Model
         $this->image = $filename;
         $this->save();
     }
+
+    public function getImage()
+    {
+        if($this->image == null)
+        {
+            return 'img\no-image.png';
+        }
+        return '/uploads/' . $this->image;
+    }
+
+    public function setCategory($id)
+    {
+        if($id == null) {return;}
+        $this->category_id = $id;
+        $this->save();
+    }
+
+    public function setTags($ids)
+    {
+        if($ids == null) {return;}
+
+        $this->tags()->sync($ids);
+    }
+
+    public function setDraft()
+    {
+        $this->status = Post::IS_DRAFT;
+        $this->save();
+    }
+
+    public function setPublic()
+    {
+        $this->status = Post::IS_PUBLIC;
+        $this->save();
+    }
+
+    public function toggleStatus($value)
+    {
+        if($value == null)
+        {
+            return $this->setDraft();
+        }
+            return $this->setPublic();
+    }
+
+    public function setFetured()
+    {
+        $this->is_featured = Post::IS_FEATURED;
+        $this->save();
+    }
+
+    public function setStandart()
+    {
+        $this->is_featured = Post::IS_STANDART;
+        $this->save();
+    }
+
+    public function toggleFeature($value)
+    {
+        if($value == null)
+        {
+            return $this->setStandart();
+        }
+        return $this->setFeatured();
+    }
 }
+
