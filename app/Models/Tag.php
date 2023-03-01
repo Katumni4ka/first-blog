@@ -20,7 +20,8 @@ class Tag extends Model
             'post_id'
         );
     }
-    public function sluggable()
+
+    public function sluggable(): array
     {
         return [
             'slug' => [
