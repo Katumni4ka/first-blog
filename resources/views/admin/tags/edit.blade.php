@@ -16,17 +16,17 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Меняем категорию</h3>
+                    <h3 class="box-title">Меняем тег</h3>
                     @include('admin.errors')
                 </div>
                 <div class="box-body">
                     {{Form::open([
-    'route'=>['categories.update',$category->id], 'method'=>'put'
+    'route'=>['tags.update',$tag->id], 'method'=>'put'
     ])}}
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Название</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="" value="{{$category->title}}">
+                            <input type="text" class="form-control" id="exampleInputEmail1" name="title" placeholder="" value="{{$tag->title}}">
                         </div>
                     </div>
                 </div>

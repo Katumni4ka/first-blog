@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DashBoardController;
+use App\Http\Controllers\Admin\TagsController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,5 +23,6 @@ Route::get('/', function () {
 Route::Group(['prefix'=>"admin"], function (){
     Route::get('/', [DashBoardController::class, 'index']);
     Route::resource('/categories', CategoriesController::class);
+    Route::resource('/tags', TagsController::class);
 });
 

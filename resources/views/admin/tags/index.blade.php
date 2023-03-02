@@ -27,7 +27,7 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <a href="{{route('categories.create')}}" class="btn btn-success">Добавить</a>
+                        <a href="{{route('tags.create')}}" class="btn btn-success">Добавить</a>
                     </div>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -38,18 +38,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($categories as $category)
+                        @foreach($tags as $tag)
                             <tr>
-                                <td>{{$category->id}}</td>
-                                <td>{{$category->title}}</td>
-                                <td>
-                                    <a href="{{route('categories.edit', $category->id)}}" class="fa fa-pencil"></a>
-                                    {{Form::open(['route'=>['categories.destroy', $category->id], 'method'=>'delete'])}}
-                                        <button onclick="return confirm ('A you sure?')" submit class="delete">
-                                            <i class="fa fa-remove"></i>
-                                        </button>
-                                    {{Form::close()}}
-                                </td>
+                                <td>{{$tag->id}}</td>
+                                <td>{{$tag->title}}</td>
+                                <td><a href="{{route('tags.edit', $tag->id)}}" class="fa fa-pencil"></a>
+                                    {{Form::open(['route'=>['tags.destroy', $tag->id], 'method'=>'delete'])}}
+                                    <button onclick="return confirm ('A you sure?')" submit class="delete">
+                                    <i class="fa fa-remove"></i>
+                                    </button>
+                                    {{Form::close()}}<a href="#" class="fa fa-remove"></a></td>
                             </tr>
                         @endforeach
                     </table>
@@ -62,5 +60,4 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
 @endsection
