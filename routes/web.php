@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoriesController;
 use App\Http\Controllers\Admin\DashBoardController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,5 +19,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', [DashBoardController::class, 'index']);
+Route::Group(['prefix'=>"admin"], function (){
+    Route::get('/', [DashBoardController::class, 'index']);
+    Route::resource('/categories', CategoriesController::class);
+});
 
