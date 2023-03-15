@@ -5,11 +5,51 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use \Storage;
 
+/**
+ * App\Models\User
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property \Illuminate\Support\Carbon|null $email_verified_at
+ * @property int $is_admin
+ * @property int $status
+ * @property string $password
+ * @property string|null $remember_token
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $avatar
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
+ * @property-read int|null $comments_count
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Post> $posts
+ * @property-read int|null $posts_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
+ * @property-read int|null $tokens_count
+ * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|User query()
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereAvatar($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereEmailVerifiedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -48,10 +88,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
     public function posts()
     {
         return $this->hasMany(Post::class);
     }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -79,26 +121,27 @@ class User extends Authenticatable
         $this->delete();
     }
 
-    public function uploadAvatar($image)
+    public function uploadAvatar(UploadedFile $image)
     {
         if ($image == null) {
             return;
         }
+        if ($this->avatar != null) {
+            Storage::delete('uploads/' . $this->avatar);
+        }
 
-        Storage::delete('uploads/' . $this->image);
-        $filename = Str::random(10) . '.' . $image->extention();
-        $image->saveAs('uploads', $filename);
-        $this->image = $filename;
+        $filename = Str::random(10) . '.' . $image->extension();
+        $image->storeAs('uploads', $filename);
+        $this->avatar = $filename;
         $this->save();
     }
 
     public function getAvatar()
     {
-        if($this->image == null)
-        {
+        if ($this->avatar == null) {
             return 'img\no-user-image.png';
         }
-        return '/uploads/' . $this->image;
+        return '/uploads/' . $this->avatar;
     }
 
     public function makeAdmin()
@@ -115,8 +158,7 @@ class User extends Authenticatable
 
     public function toggleAdmin($value)
     {
-        if($value == null)
-        {
+        if ($value == null) {
             return $this->makeNormal();
         }
         return $this->makeAdmin();
@@ -127,6 +169,7 @@ class User extends Authenticatable
         $this->status = User::IS_BANNED;
         $this->save();
     }
+
     public function unban()
     {
         $this->status = User::IS_ACTIVE;
@@ -135,8 +178,7 @@ class User extends Authenticatable
 
     public function toggleBan($value)
     {
-        if($value == null)
-        {
+        if ($value == null) {
             return $this->unban();
         }
         return $this->ban();

@@ -1,4 +1,4 @@
- @extends('admin.layout')
+@extends('admin.layout')
 
 @section('content')
     <!-- Content Wrapper. Contains page content -->
@@ -43,15 +43,15 @@
                         @foreach($users as $user)
                             <tr>
                                 <td>{{$user->id}}</td>
-                                <td>{$user->name}}</td>
-                                <td>{$user->email}}</td>
+                                <td>{{$user->name}}</td>
+                                <td>{{$user->email}}</td>
                                 <td>
-                                    <img src="{{$user->getImage()}}" alt="" class="img-responsive" width="150">
+                                    <img src="{{$user->getAvatar()}}" alt="" class="img-responsive" width="150">
                                 </td>
                                 <td><a href="{{route('users.edit', $user->id)}}"
                                        class="fa fa-pencil"></a>
                                     {{Form::open(['route'=>['users.destroy', $user->id], 'method'=>'delete'])}}
-                                    <button onclick="return confirm ('A you sure?')" submit class="delete">
+                                    <button onclick="return confirm ('A you sure?')" type="submit" class="delete">
                                         <i class="fa fa-remove"></i>
                                     </button>
                                     {{Form::close()}}</td>

@@ -13,11 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('subscriptions', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('email');
-            $table->string('token')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('avatar')->nullable();
         });
     }
 
@@ -28,6 +25,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('subscriptions');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('avatar');
+
+        });
     }
 };

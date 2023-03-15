@@ -13,7 +13,7 @@
 
         <!-- Main content -->
         <section class="content">
-    {{Form::open(['route' => 'users.store'])}}
+    {{Form::open(['route' => 'users.store', 'files' => true])}}
             <!-- Default box -->
             <div class="box">
                 <div class="box-header with-border">
@@ -24,11 +24,10 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="exampleInputName">Имя</label>
-                            <input type="text" name="name" class="form-control" id="exampleInputName" placeholder="">
-                        </div>
+                            <input type="text" name="name" class="form-control" id="exampleInputName" placeholder="" value={{old('name')}}>                       </div>
                         <div class="form-group">
                             <label for="exampleInputEmail1">E-mail</label>
-                            <input type="text" name="email" class="form-control" id="exampleInputEmail1" placeholder="">
+                            <input type="text" name="email" class="form-control" id="exampleInputEmail1" placeholder="" value={{old('email')}}>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword">Пароль</label>
