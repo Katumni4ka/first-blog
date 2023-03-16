@@ -40,11 +40,13 @@ class UsersController extends Controller
     {
         $this->validate($request, [
             'name' => 'required', //обязательно
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users',
             'password' => 'required',
             'avatar' => 'nullable|image|max:2048'
-
-        ]);
+        ],/**[
+            'name.required' => 'Имя обязательно',
+            'avatar.max:2048' => 'Размер файла более 2Мб',
+        ]*/);
 
         $user = User::add($request->all());
         $user->uploadAvatar($request->file('avatar'));

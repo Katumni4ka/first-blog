@@ -121,7 +121,7 @@ class User extends Authenticatable
         $this->delete();
     }
 
-    public function uploadAvatar(UploadedFile $image)
+    public function uploadAvatar(UploadedFile|null $image)
     {
         if ($image == null) {
             return;
@@ -139,7 +139,7 @@ class User extends Authenticatable
     public function getAvatar()
     {
         if ($this->avatar == null) {
-            return 'img\no-user-image.png';
+            return '/img/no-image.png';
         }
         return '/uploads/' . $this->avatar;
     }
