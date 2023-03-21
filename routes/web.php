@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/post/{slug}', [HomeController::class, 'show'])->name('post.show');
 
 Route::Group(['prefix'=>"admin"], function (){
     Route::get('/', [DashBoardController::class, 'index']);
