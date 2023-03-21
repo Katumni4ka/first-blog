@@ -18,7 +18,7 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view( 'admin.posts.index', ['posts'=>$posts]);
+        return view('admin.posts.index', ['posts' => $posts]);
     }
 
     /**
@@ -33,37 +33,37 @@ class PostsController extends Controller
         return view('admin.posts.create', compact(
             'categories',
             'tags'
-    ));
+        ));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'title'   => 'required',
             'content' => 'required',
-            'date' => 'required',
-            'image' => 'nullable|image',
+            'date'    => 'required',
+            'image'   => 'nullable|image',
         ]);
-            $post = Post::add($request->all());
-            $post->uploadImage($request->file('image'));
-            $post->setCategory($request->get('category_id'));
-            $post->setTags($request->get('tags'));
-            $post->toggleStatus($request->get('status'));
-            $post->toggleFeature($request->get('is_featured'));
+        $post = Post::add($request->all());
+        $post->uploadImage($request->file('image'));
+        $post->setCategory($request->get('category_id'));
+        $post->setTags($request->get('tags'));
+        $post->toggleStatus($request->get('status'));
+        $post->toggleFeature($request->get('is_featured'));
 
-            return redirect()->route('posts.index');
+        return redirect()->route('posts.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
@@ -75,9 +75,9 @@ class PostsController extends Controller
         $selectedTagsIds = $post->tags->pluck('id')->all();
 
         return view('admin.posts.edit', [
-            'post' => $post,
-            'categories' => $categories,
-            'tags' => $tags,
+            'post'         => $post,
+            'categories'   => $categories,
+            'tags'         => $tags,
             'selectedTags' => $selectedTagsIds,
         ]);
     }
@@ -85,17 +85,17 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'title' => 'required',
+            'title'   => 'required',
             'content' => 'required',
-            'date' => 'required',
-            'image' => 'nullable|image',
+            'date'    => 'required',
+            'image'   => 'nullable|image',
         ]);
 
         $post = Post::find($id);
@@ -112,7 +112,7 @@ class PostsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)

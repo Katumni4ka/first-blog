@@ -54,16 +54,18 @@ class Post extends Model
     const IS_PUBLIC = 1;
     const IS_FEATURED = 1;
     const IS_STANDART = 0;
-    protected $fillable = ['title', 'content', 'date'];
+    protected $fillable = ['title', 'content', 'date', 'description'];
 
     public function category()
     {
         return $this->belongsTo(Category::class);
     }
+
     public function author()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
+
     public function tags()
     {
         return $this->belongsToMany(
@@ -74,6 +76,7 @@ class Post extends Model
             'tag_id'
         );
     }
+
     public function sluggable(): array
     {
         return [
@@ -107,14 +110,17 @@ class Post extends Model
 
     public function removeImage()
     {
-        if($this->image != null){
+        if ($this->image != null) {
 
             Storage::delete('uploads/' . $this->image);
         }
     }
+
     public function uploadImage($image)
     {
-        if($image == null) { return; }
+        if ($image == null) {
+            return;
+        }
 
         $this->removeImage();
         $filename = Str::random(10) . '.' . $image->extension();
@@ -125,8 +131,7 @@ class Post extends Model
 
     public function getImage()
     {
-        if($this->image == null)
-        {
+        if ($this->image == null) {
             return '/img/no-image.png';
         }
         return '/uploads/' . $this->image;
@@ -134,14 +139,18 @@ class Post extends Model
 
     public function setCategory($id)
     {
-        if($id == null) {return;}
+        if ($id == null) {
+            return;
+        }
         $this->category_id = $id;
         $this->save();
     }
 
     public function setTags($ids)
     {
-        if($ids == null) {return;}
+        if ($ids == null) {
+            return;
+        }
 
         $this->tags()->sync($ids);
     }
@@ -160,11 +169,10 @@ class Post extends Model
 
     public function toggleStatus($value)
     {
-        if($value == null)
-        {
+        if ($value == null) {
             return $this->setDraft();
         }
-            return $this->setPublic();
+        return $this->setPublic();
     }
 
     public function setFetured()
@@ -187,8 +195,7 @@ class Post extends Model
 
     public function toggleFeature($value)
     {
-        if($value == null)
-        {
+        if ($value == null) {
             return $this->setStandart();
         }
         return $this->setFeatured();
@@ -210,13 +217,26 @@ class Post extends Model
     {
         return ($this->category != null)
             ? $this->category->title
+            : null;
+    }
+
+    public function getCategoryID()
+    {
+        return ($this->category != null)
+            ? $this->category->id
             : 'Нет категории';
     }
+
     public function getTagsTitles()
     {
         return (!$this->tags->isEmpty())
             ? implode(', ', $this->tags->pluck('title')->all())
             : 'Нет тегов';
+    }
+
+    public function getDate()
+    {
+        return Carbon::createFromFormat('d/m/y', $this->date)->format('F d, Y');
     }
 }
 
