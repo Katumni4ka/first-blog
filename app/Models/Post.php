@@ -69,7 +69,6 @@ class Post extends Model
     public function tags()
     {
         return $this->belongsToMany(
-
             Tag::class,
             'post_tags',
             'post_id',
@@ -105,6 +104,7 @@ class Post extends Model
     public function remove()
     {
         $this->removeImage();
+        $this->tags()->detach();
         $this->delete();
     }
 
@@ -264,6 +264,11 @@ class Post extends Model
     public function related()
     {
         return self::all()->except($this->id);
+    }
+
+    public function hasCategory()
+    {
+        return $this->category != null ? true : false;
     }
 }
 

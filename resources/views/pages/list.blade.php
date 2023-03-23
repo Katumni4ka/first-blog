@@ -6,48 +6,45 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    @foreach($posts as $post)
-                    <article class="post">
-                        <div class="post-thumb">
-                            <a href="{{route('post.show', $post->slug)}}"><img src="{{$post->getImage()}}" alt=""></a>
+                    <div class="row">
+                        @foreach($posts as $post)
+                        <div class="col-md-6">
+                            <article class="post post-grid">
+                                <div class="post-thumb">
+                                    <a href="{{route('post.show', $post->slug)}}"><img src="{{$post->getImage()}}" alt=""></a>
 
-                            <a href="{{route('post.show', $post->slug)}}" class="post-thumb-overlay text-center">
-                                <div class="text-uppercase text-center">View Post</div>
-                            </a>
-                        </div>
-                        <div class="post-content">
-                            <header class="entry-header text-center text-uppercase">
-                                @if($post->hasCategory())
-                                <h6><a href="{{route('category.show', $post->category->slug)}}">{{$post->getCategoryTitle()}}</a></h6>
-                                <h1 class="entry-title"><a href="{{route('post.show', $post->slug)}}">{{$post->title}}</a></h1>
-                                @endif
-
-                            </header>
-                            <div class="entry-content">
-                                {!!$post->description!!}
-                                <div class="btn-continue-reading text-center text-uppercase">
-                                    <a href="{{route('post.show', $post->slug)}}" class="more-link">Continue Reading</a>
+                                    <a href="{{route('post.show', $post->slug)}}" class="post-thumb-overlay text-center">
+                                        <div class="text-uppercase text-center">View Post</div>
+                                    </a>
                                 </div>
-                            </div>
-                            <div class="social-share">
-                                <span class="social-share-title pull-left text-capitalize">By <a href="#">Rubel</a> On {{$post->getDate()}}</span>
-                                <ul class="text-center pull-right">
-                                    <li><a class="s-facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                                    <li><a class="s-twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                                    <li><a class="s-google-plus" href="#"><i class="fa fa-google-plus"></i></a></li>
-                                    <li><a class="s-linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    <li><a class="s-instagram" href="#"><i class="fa fa-instagram"></i></a></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </article>
-                    @endforeach
-                    {{$posts->links('vendor.pagination.default')}}   <!--resources/views-->
+                                <div class="post-content">
+                                    <header class="entry-header text-center text-uppercase">
+                                        @if($post->hasCategory())
+                                        <h6>
+                                            <a href="{{route('category.show', $post->category->slug)}}"> {{$post->getCategoryTitle()}}</a>
+                                        </h6>
+                                        @endif      <!--повторяющиеся элементы можно вынести в отдельные виды и подключать через 'include'-->
+                                                    <!--например ('partials._category', ['post'] => $post);-->
+                                        <h1 class="entry-title">
+                                            <a href="{{route('post.show', $post->slug)}}">{{$post->title}}</a>
+                                        </h1>
+                                    </header>
+                                    <div class="entry-content">
+                                        {!! $post->description !!}
 
+                                        <div class="social-share">
+                                            <span class="social-share-title pull-left text-capitalize">By Rubel On {{$post->getDate()}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        @endforeach
+                    </div>
+                    {{$posts->links('vendor.pagination.default')}}
                 </div>
                 <div class="col-md-4" data-sticky_column>
                     <div class="primary-sidebar">
-
                         <aside class="widget news-letter">
                             <h3 class="widget-title text-uppercase text-center">Get Newsletter</h3>
 
@@ -149,6 +146,7 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="#" class="popular-img"><img src="/images/r-p.jpg" alt="">
+
                                             <div class="p-overlay"></div>
                                         </a>
                                     </div>
@@ -164,6 +162,7 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="#" class="popular-img"><img src="/images/r-p.jpg" alt="">
+
                                             <div class="p-overlay"></div>
                                         </a>
                                     </div>
@@ -179,6 +178,7 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="#" class="popular-img"><img src="/images/r-p.jpg" alt="">
+
                                             <div class="p-overlay"></div>
                                         </a>
                                     </div>
@@ -194,6 +194,7 @@
                                 <div class="media">
                                     <div class="media-left">
                                         <a href="#" class="popular-img"><img src="/images/r-p.jpg" alt="">
+
                                             <div class="p-overlay"></div>
                                         </a>
                                     </div>
