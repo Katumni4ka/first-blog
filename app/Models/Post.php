@@ -175,10 +175,14 @@ class Post extends Model
         return $this->setPublic();
     }
 
-    public function setFetured()
+    public function comments()
     {
-        $this->is_featured = Post::IS_FEATURED;
-        $this->save();
+        return $this->hasMany(Comment::class);
+    }
+
+    public function getComments()
+    {
+        return $this->comments()->where('status', 1)->get();
     }
 
     public function setStandart()

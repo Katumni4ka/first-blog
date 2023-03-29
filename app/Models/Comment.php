@@ -38,12 +38,12 @@ class Comment extends Model
 
     public function posts()
     {
-        return $this->hasOne(Post::class);
+        return $this->belongsTo(Post::class);
     }
 
     public function author()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function allow()
@@ -60,9 +60,8 @@ class Comment extends Model
 
     public function toggleStatus()
     {
-        if($this->status = Comment::IS_DISALLOW)
-        {
-           return $this->allow();
+        if ($this->status == Comment::IS_DISALLOW) {
+            return $this->allow();
         }
         return $this->disAllow();
     }

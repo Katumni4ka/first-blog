@@ -18,46 +18,43 @@
 
         <!-- Main content -->
         <section class="content">
+
             <!-- Default box -->
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Листинг сущности</h3>
-                    @include('admin.errors')
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <a href="{{route('posts.create')}}" class="btn btn-success">Добавить</a>
+                        <a href="create.html" class="btn btn-success">Добавить</a>
                     </div>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Название</th>
-                            <th>Категория</th>
-                            <th>Теги</th>
-                            <th>Картинка</th>
+                            <th>Текст</th>
                             <th>Действия</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($posts as $post)
+                        @foreach($comments as $comment)
                         <tr>
-                            <td>{{$post->id}}</td>
-                            <td>{{$post->title}}</td>
-                            <td>{{$post->getCategoryTitle()}}</td>
-                            <td>{{$post->getTagsTitles()}}</td>
-                            <td>
-                                <img src="{{$post->getImage()}}" alt="" width="100">
+                            <td>{{$comment->id}}</td>
+                            <td>{{$comment->text}}
                             </td>
                             <td>
-                                <a href="{{route('posts.edit', $post->id)}}" class="fa fa-pencil"></a>
-                                {{Form::open(['route'=>['posts.destroy', $post->id], 'method'=>'delete'])}}
-{{--                                @method('delete')--}}
-                                    <button onclick="return confirm ('Are you sure?')" class="delete">
+                                @if($comment->status == 1)
+                                    <a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-lock"></a>
+                                @else
+                                    <a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-thumbs-o-up"></a>
+                                @endif
+
+                                    {{Form::open(['route'=>['comments.destroy', $comment->id], 'method'=>'delete'])}}
+                                    <button onclick="return confirm ('Are you sure?')" submit class="delete">
                                         <i class="fa fa-remove"></i>
                                     </button>
-                                {{Form::close()}}
+                                    {{Form::close()}}
                             </td>
                         </tr>
                         @endforeach
@@ -66,6 +63,7 @@
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
+
         </section>
         <!-- /.content -->
     </div>
