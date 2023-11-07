@@ -37,7 +37,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/"><img src="/images/logo.png" alt=""></a>
+                <a class="navbar-brand" href="/"><img src="/images/logo-home.png" alt=""></a>
             </div>
 
 
@@ -128,7 +128,9 @@
         <div class="row">
             <div class="col-md-4">
                 <aside class="footer-widget">
-                    <div class="about-img"><img src="/images/footer-logo.png" alt=""></div>
+                    <h3 class="widget-title text-uppercase">YEKATERINA</h3>
+
+{{--                    <div class="about-img"><img src="#" alt=""></div>--}}
                     <div class="about-content">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
                         eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed voluptua. At vero eos et
                         accusam et justo duo dlores et ea rebum magna text ar koto din.
@@ -136,11 +138,11 @@
                     <div class="address">
                         <h4 class="text-uppercase">contact Info</h4>
 
-                        <p> 142/5 BC Street, ES, VSA</p>
+                        <p> 12/56 AV Street, Ukraine</p>
 
-                        <p> Phone: +123 456 78900</p>
+                        <p> Phone: +3 (123) 456 78 90</p>
 
-                        <p>rahim@marlindev.ru</p>
+                        <p>katumni4ka@gmail.com</p>
                     </div>
                 </aside>
             </div>
@@ -169,7 +171,7 @@
                                         <img src="/images/author.png" alt="">
 
                                         <div class="author-text">
-                                            <h4>Sophia</h4>
+                                            <h4>Kate</h4>
 
                                             <h4>Client, Tech</h4>
                                         </div>
@@ -188,7 +190,7 @@
                                         <img src="/images/author.png" alt="">
 
                                         <div class="author-text">
-                                            <h4>Sophia</h4>
+                                            <h4>Kate</h4>
 
                                             <h4>Client, Tech</h4>
                                         </div>
@@ -207,7 +209,7 @@
                                         <img src="/images/author.png" alt="">
 
                                         <div class="author-text">
-                                            <h4>Sophia</h4>
+                                            <h4>Kate</h4>
 
                                             <h4>Client, Tech</h4>
                                         </div>
@@ -241,8 +243,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="text-center">&copy; 2017 <a href="#">Blog, </a> Designed with <i
-                            class="fa fa-heart"></i> by <a href="#">Marlin</a>
+                    <div class="text-center">&copy; 2023 <a href="#">Blog, </a> Designed with <i
+                            class="fa fa-heart"></i> <a href="#"></a>
                     </div>
                 </div>
             </div>

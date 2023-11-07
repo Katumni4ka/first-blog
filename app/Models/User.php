@@ -20,11 +20,12 @@ use \Storage;
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property int $is_admin
  * @property int $status
- * @property string $password
+ * @property string|null $password
  * @property string|null $remember_token
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string|null $avatar
+ * @property string $profile_status
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
  * @property-read int|null $comments_count
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
@@ -45,6 +46,7 @@ use \Storage;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereIsAdmin($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User wherePassword($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|User whereProfileStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRememberToken($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
@@ -67,6 +69,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'profile_status',
     ];
 
     /**
@@ -183,15 +186,15 @@ class User extends Authenticatable
         $this->save();
     }
 
-    public function unban()
+    public function unban(): void
     {
         $this->status = User::IS_ACTIVE;
         $this->save();
     }
 
-    public function toggleBan($value)
+    public function toggleBan()
     {
-        if ($value == null) {
+        if ($this->status === User::IS_BANNED) {
             return $this->unban();
         }
         return $this->ban();

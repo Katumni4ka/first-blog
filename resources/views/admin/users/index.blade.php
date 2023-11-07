@@ -22,7 +22,7 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Листинг сущности</h3>
+                    <h3 class="box-title">ПОЛЬЗОВАТЕЛИ</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
@@ -50,6 +50,11 @@
                                 </td>
                                 <td><a href="{{route('users.edit', $user->id)}}"
                                        class="fa fa-pencil"></a>
+                                    @if($user->status == \App\Models\User::IS_ACTIVE)
+                                        <a href="{{route('users_toggle', $user->id)}}" class="fa fa-lock"></a>
+                                    @else
+                                        <a href="{{route('users_toggle', $user->id)}}" class="fa fa-thumbs-o-up"></a>
+                                    @endif
                                     {{Form::open(['route'=>['users.destroy', $user->id], 'method'=>'delete'])}}
                                     <button onclick="return confirm ('Are you sure?')" type="submit" class="delete">
                                         <i class="fa fa-remove"></i>

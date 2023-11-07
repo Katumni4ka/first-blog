@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -23,10 +24,16 @@ use Illuminate\Support\Str;
  * @property int $views
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $date
+ * @property string|null $image
+ * @property string|null $description
  * @property-read \App\Models\User|null $author
  * @property-read \App\Models\Category|null $category
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
+ * @property-read int|null $comments_count
  * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Tag> $tags
  * @property-read int|null $tags_count
+ * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Post findSimilarSlugs(string $attribute, array $config, string $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Post newQuery()
@@ -34,7 +41,10 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Post whereImage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereIsFeatured($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereSlug($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Post whereStatus($value)
@@ -50,8 +60,8 @@ class Post extends Model
     use HasFactory;
     use Sluggable;
 
-    const IS_DRAFT = 0;
-    const IS_PUBLIC = 1;
+    const STATUS_IS_DRAFT = 0;
+    const STATUS_IS_PUBLIC = 1;
     const IS_FEATURED = 1;
     const IS_STANDART = 0;
     protected $fillable = ['title', 'content', 'date', 'description'];
@@ -68,6 +78,8 @@ class Post extends Model
 
     public function tags()
     {
+        return
+            "$first";
         return $this->belongsToMany(
             Tag::class,
             'post_tags',
@@ -89,7 +101,7 @@ class Post extends Model
     {
         $post = new static;
         $post->fill($fields);
-        $post->user_id = 1;
+        $post->user_id = Auth::user()->id;
         $post->save();
 
         return $post;
@@ -157,13 +169,13 @@ class Post extends Model
 
     public function setDraft()
     {
-        $this->status = Post::IS_DRAFT;
+        $this->status = Post::STATUS_IS_DRAFT;
         $this->save();
     }
 
     public function setPublic()
     {
-        $this->status = Post::IS_PUBLIC;
+        $this->status = Post::STATUS_IS_PUBLIC;
         $this->save();
     }
 

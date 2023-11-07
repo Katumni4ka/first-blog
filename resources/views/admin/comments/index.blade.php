@@ -22,12 +22,12 @@
             <!-- Default box -->
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Листинг сущности</h3>
+                    <h3 class="box-title">КОММЕНТАРИИ</h3>
                 </div>
                 <!-- /.box-header -->
                 <div class="box-body">
                     <div class="form-group">
-                        <a href="create.html" class="btn btn-success">Добавить</a>
+                        <a href="#" class="btn btn-success">Добавить</a>
                     </div>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -44,14 +44,12 @@
                             <td>{{$comment->text}}
                             </td>
                             <td>
-                                @if($comment->status == 1)
-                                    <a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-lock"></a>
-                                @else
-                                    <a href="/admin/comments/toggle/{{$comment->id}}" class="fa fa-thumbs-o-up"></a>
-                                @endif
-
+                                    <a href="{{route('comments_toggle', $comment->id)}}"
+                                       class="{{ $comment->status == \App\Models\Comment::IS_ALLOW
+                                                    ? 'fa fa-lock'
+                                                    : 'fa fa-thumbs-o-up' }}"></a>
                                     {{Form::open(['route'=>['comments.destroy', $comment->id], 'method'=>'delete'])}}
-                                    <button onclick="return confirm ('Are you sure?')" submit class="delete">
+                                    <button onclick="return confirm ('Are you sure?')" class="delete">
                                         <i class="fa fa-remove"></i>
                                     </button>
                                     {{Form::close()}}

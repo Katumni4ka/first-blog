@@ -8,11 +8,11 @@
                 <div class="col-md-8">
 
                     <div class="leave-comment mr0"><!--leave comment-->
-                        @if(session('status'))
-                          <div class="alert alert-success">
-                            {{session('status')}}
-                          </div>
-                        @endif
+{{--                        @if(session('status'))--}}
+{{--                          <div class="alert alert-success">--}}
+{{--                            {{session('status')}}--}}
+{{--                          </div>--}}
+{{--                        @endif--}}
                         <h3 class="text-uppercase">My profile</h3>
                         @include('admin.errors')
                         <br>
@@ -37,7 +37,12 @@
                                            placeholder="password">
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" id="profile_status" name="profile_status"
+                                           placeholder="status" value="{{$user->profile_status}}">
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <input type="file" class="form-control" id="image" name="avatar">

@@ -53,8 +53,9 @@ Route::Group(['prefix'=>"admin", 'middleware' => 'admin'], function (){
     Route::resource('/tags', TagsController::class);
     Route::resource('/users', UsersController::class);
     Route::get('/comments', [AdminCommentsController::class, 'index'])->name('comments_index');
-    Route::get('comments/toggle/{id}', [AdminCommentsController::class, 'toggle']);
-    Route::delete('comments/{id}/destroy', [AdminCommentsController::class, 'destroy'])->name('comments.destroy');
+    Route::get('/comments/toggle/{id}', [AdminCommentsController::class, 'toggle'])->name('comments_toggle');
+    Route::delete('/comments/{id}/destroy', [AdminCommentsController::class, 'destroy'])->name('comments.destroy');
+    Route::get('/users/toggle/{id}', [UsersController::class, 'toggle'])->name('users_toggle');
     Route::resource('/subscribers', SubscribersController::class);
     // Route::resource('/posts', PostsController::class);
     /**
@@ -62,11 +63,12 @@ Route::Group(['prefix'=>"admin", 'middleware' => 'admin'], function (){
      */
     Route::group(['prefix' => 'posts', 'middleware' => 'admin'], function() {
         Route::get('/', [PostsController::class, 'index'])->name('posts.index');
+        Route::post('/{id}/toggle_status', [PostsController::class, 'toggleStatus'])->name('posts.toggleStatus');
         Route::get('/create', [PostsController::class, 'create'])->name('posts.create');
         Route::post('/create', [PostsController::class, 'store'])->name('posts.store');
-        Route::get('/{post}/edit', [PostsController::class, 'edit'])->name('posts.edit');
-        Route::patch('/{post}/update', [PostsController::class, 'update'])->name('posts.update');
-        Route::delete('/{post}/delete', [PostsController::class, 'destroy'])->name('posts.destroy');
+        Route::get('/{id}/edit', [PostsController::class, 'edit'])->name('posts.edit');
+        Route::patch('/{id}/update', [PostsController::class, 'update'])->name('posts.update');
+        Route::delete('/{id}/delete', [PostsController::class, 'destroy'])->name('posts.destroy');
     });
 });
 
