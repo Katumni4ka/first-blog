@@ -78,8 +78,6 @@ class Post extends Model
 
     public function tags()
     {
-        return
-            "$first";
         return $this->belongsToMany(
             Tag::class,
             'post_tags',
